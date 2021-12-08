@@ -4,8 +4,8 @@ const router = express.Router()
 const { userSchema } = require("../model/userSchema.js")
 
 const users = [
-  { id: 1, first_name: 'Jahid', last_name: 'Hossain', age: 23 },
-  { id: 2, first_name: 'Abdur', last_name: 'Rahman', age: 25 },
+  { id: 1, first_name: 'john', last_name: 'wick' },
+  { id: 2, first_name: 'jack', last_name: 'Reacher' },
 ];
 
 const validateUser = async user => {
@@ -65,18 +65,6 @@ router.put("/:id", function (req, res) {
   res.send(user);
 });
 
-router.delete("/:id", function (req, res) {
-  const id = req.params.id;
-  const user = users.find((user) => user.id == id);
-
-  if (!user) return res.status(404).send("User not found");
-
-  const index = users.indexOf(user);
-  users.splice(index, 1);
-
-  res.json(user);
-});
-
 router.patch("/:id", function (req, res) {
   const id = req.params.id;
   const { first_name, last_name } = req.body;
@@ -90,5 +78,19 @@ router.patch("/:id", function (req, res) {
 
   res.json(user);
 });
+
+router.delete("/:id", function (req, res) {
+  const id = req.params.id;
+  const user = users.find((user) => user.id == id);
+
+  if (!user) return res.status(404).send("User not found");
+
+  const index = users.indexOf(user);
+  users.splice(index, 1);
+
+  res.json(user);
+});
+
+
 
 module.exports = router;
