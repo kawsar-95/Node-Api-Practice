@@ -1,6 +1,8 @@
 const express = require('express');
+
 const productSchema = require('../model/productSchema');
-const router = express.Router()
+
+const router = express.Router();
 
 const products = [
   {

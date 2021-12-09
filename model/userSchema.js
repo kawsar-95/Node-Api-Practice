@@ -11,7 +11,6 @@ const userSchema = object().shape({
     .required('Last name must not be empty.'),
 });
 
-
 module.exports.userSchema = userSchema;
 
 

@@ -1,4 +1,3 @@
-
 const { string, number, object, array } = require('yup');
 
 const productSchema = object().shape({
@@ -14,9 +13,9 @@ const productSchema = object().shape({
     .required('Category is not empty')
     .min(3, 'Last name must be at least 3 characters.')
     .max(50, 'Last name must be at most 50 characters.'),
-})
+});
 
-module.exports = productSchema
+module.exports = productSchema;
 
 
 

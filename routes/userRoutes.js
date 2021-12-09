@@ -1,7 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
 
-const { userSchema } = require("../model/userSchema.js")
+const router = express.Router();
+
+const { userSchema } = require("../model/userSchema.js");
 
 const users = [
   { id: 1, first_name: 'john', last_name: 'wick' },
