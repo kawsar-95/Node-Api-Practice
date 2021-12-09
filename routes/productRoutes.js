@@ -72,7 +72,7 @@ router.post("/", async function (req, res) {
 });
 
 router.put('/:id', async function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   const { title, price, category } = req.body;
   const product = products.find(product => product.id === parseInt(id));
   if (!product) return res.status(404).send("product not found");
@@ -91,6 +91,31 @@ router.put('/:id', async function (req, res) {
 });
 
 router.patch('/:id', async function (req, res) {
+  const { id } = req.params;
+
+  const { title, price, category } = req.body;
+  const product = products.find(product => product.id === parseInt(id));
+  if (!product) return res.status(404).send("product not found");
+
+  if (title) product.title = title;
+  if (price) product.price = price;
+  if (category) product.category = category;
+
+  res.json(product)
+
+})
+
+router.delete('/:id', function (req, res) {
+  const { id } = req.params;
+
+  const product = products.find((product) => product.id == id);
+
+  if (!product) return res.status(404).send("product not found");
+
+  const index = products.indexOf(product);
+  products.splice(index, 1);
+
+  res.json(product);
 
 })
 

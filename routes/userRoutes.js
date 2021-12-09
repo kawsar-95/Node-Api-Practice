@@ -23,7 +23,7 @@ router.get("/", function (req, res) {
 });
 
 router.get("/:id", function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   const user = users.find(user => user.id === parseInt(id));
   if (!user) return res.status(404).send("User not found");
   res.send(user);
@@ -52,7 +52,7 @@ router.post("/", async function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   const { first_name, last_name } = req.body;
 
   const user = users.find((user) => user.id == id);
@@ -66,7 +66,7 @@ router.put("/:id", function (req, res) {
 });
 
 router.patch("/:id", function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   const { first_name, last_name } = req.body;
 
   const user = users.find((user) => user.id == id);
@@ -80,7 +80,7 @@ router.patch("/:id", function (req, res) {
 });
 
 router.delete("/:id", function (req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   const user = users.find((user) => user.id == id);
 
   if (!user) return res.status(404).send("User not found");
