@@ -1,6 +1,6 @@
 const express = require('express');
 
-const productSchema = require('../model/productSchema');
+const productSchema = require('../schema/productSchema');
 
 const router = express.Router();
 
@@ -112,7 +112,7 @@ router.delete('/:id', function (req, res) {
 
   const product = products.find((product) => product.id == id);
 
-  if (!product) return res.status(404).send("product not found");
+  if (!product) return res.status(404).send("product Deleted");
 
   const index = products.indexOf(product);
   products.splice(index, 1);

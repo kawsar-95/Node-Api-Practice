@@ -8,7 +8,7 @@ const userSchema = object().shape({
   last_name: string()
     .min(3, 'Last name must be at least 3 characters.')
     .max(50, 'Last name must be at most 50 characters.')
-    .required('Last name must not be empty.'),
+    .required('Last name must not be empty.')
 });
 
 module.exports.userSchema = userSchema;

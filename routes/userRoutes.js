@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { userSchema } = require("../model/userSchema.js");
+const { userSchema } = require("../schema/userSchema.js");
 
 const users = [
   { id: 1, first_name: 'john', last_name: 'wick' },
