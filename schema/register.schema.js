@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-vars */
 const { string, number, object, array, ref } = require('yup');
 
 function isEmailLengthValid(email) {
@@ -17,8 +19,11 @@ const registerSchema = object().shape({
     .email('This Field should be a valid email Address')
     .max(100, 'First name must be at most 100 characters.')
     .required('First name must not be empty.')
-    .test('is-valid-email-length', 'the part before @of the email can be maximum 64 characters',
-      email => isEmailLengthValid(email)),  // this is a test for validating email here is a error messag also a callback function test('name','error message',callback_function)
+    .test(
+      'is-valid-email-length',
+      'the part before @of the email can be maximum 64 characters',
+      (email) => isEmailLengthValid(email)
+    ), // this is a test for validating email here is a error message also a callback function test('name','error message',callback_function)
 
   password: string()
     .min(3, 'First name must be at least 3 characters.')
@@ -27,8 +32,7 @@ const registerSchema = object().shape({
 
   confirm_password: string()
     .required('First name must not be empty.')
-    .oneOf([ref, ('newPassword'), null], 'passwords Must match')
+    .oneOf([ref, 'newPassword', null], 'passwords Must match'),
+});
 
-})
-
-module.exports = registerSchema;  
+module.exports = registerSchema;

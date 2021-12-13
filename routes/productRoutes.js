@@ -67,9 +67,9 @@ router.post("/", async function (req, res) {
     products.push(product);
     res.send(product);
   }
-  catch (err) {
+  catch (error) {
     // return res.status(404).send(err.errors[0]);
-    console.log(err)
+    console.log(error)
   }
 });
 
@@ -86,9 +86,9 @@ router.put('/:id', async function (req, res) {
     product.category = category;
     res.send(product);
   }
-  catch (err) {
+  catch (error) {
 
-    console.log(err)
+    console.log(error)
   }
 });
 
