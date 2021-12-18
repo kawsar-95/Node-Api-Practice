@@ -1,5 +1,5 @@
 const { User } = require('../models/dbmodel');
-const { validateUserRegistration, validateUserUpdate } = require('../validation/user.validate');
+const { validateUserRegistration, validateUserUpdate } = require('../validations/user.validate');
 
 const getUsers = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ const postUser = async (req, res) => {
       where: {
         email
       }
-    });
+    }); // Select id,email,username,password from users where email ='nuruddinkawsar1995@gmail.com'
 
     if (existingUser) return res.status(400).send('Already registered with this email address.');
 
