@@ -96,17 +96,17 @@ const patchProduct = async (req, res) => {
     if (err) return res.status(400).send(err);
 
     const product = await Product.update({
-      name,
-      price,
-      description,
-      category
-    }, {
       where: {
         id
       }
     });
 
     if (!product) return res.status(404).send('Product not found!');
+
+    if (name) product.update({ name })
+    if (price) product.update({ price })
+    if (description) product.update({ description })
+    if (category) product.update({ category })
 
     res.status(201).send(product);
   }
@@ -119,13 +119,15 @@ const patchProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  const product = await Product.destroy({
+  const product = await Product.findOne({
     where: {
       id
     }
   });
 
   if (!product) return res.status(404).send('Product not found!');
+
+  await product.destroy();
 
   res.sendStatus(201).send(product);
 }

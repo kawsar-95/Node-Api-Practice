@@ -25,5 +25,7 @@ const productUpdateSchema = object().shape({
     .max(255, 'Category must be at most 255 characters long.')
 });
 
-module.exports.productUploadSchema = productUploadSchema;
-module.exports.productUpdateSchema = productUpdateSchema;
+module.exports = {
+  productUploadSchema,
+  productUpdateSchema
+};

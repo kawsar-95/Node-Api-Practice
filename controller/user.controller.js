@@ -101,15 +101,15 @@ const patchUser = async (req, res) => {
     if (err) return res.status(400).send(err);
 
     const user = await User.update({
-      username,
-      email
-    }, {
       where: {
         id
       }
     });
 
     if (!user) return res.status(404).send('User not found!');
+
+    if (username) user.update({ username })
+    if (email) user.update({ email })
 
     res.status(201).send(user);
   }
@@ -130,6 +130,8 @@ const deleteUser = async (req, res) => {
     });
 
     if (!user) return res.status(404).send('User not found!');
+
+    await user.destroy();
 
     res.sendStatus(200).send(user);
   }
