@@ -33,13 +33,9 @@ const getUser = async (req, res) => {
   }
 }
 
-const postUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
-    const { username, email, password, confirm_password } = req.body;
-
-    const err = await validateUserRegistration({ username, email, password, confirm_password });
-
-    if (err) return res.status(400).send(err);
+    const { username, email, password } = req.body;
 
     const existingUser = await User.findOne({
       where: {
@@ -143,7 +139,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getUser,
   getUsers,
-  postUser,
+  createUser,
   putUser,
   patchUser,
   deleteUser

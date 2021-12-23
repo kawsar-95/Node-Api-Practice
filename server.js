@@ -5,8 +5,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/users', users);
-app.use('/api/products', products);
+app.use(users);
+app.use(products);
 
 app.get('/', (req, res) => {
   res.send('The server is running...');
