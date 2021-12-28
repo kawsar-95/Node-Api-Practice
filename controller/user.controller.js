@@ -1,9 +1,14 @@
-const { User } = require('../models/dbmodel');
-const { validateUserRegistration, validateUserUpdate } = require('../validations/user.validate');
+const User = require('../models/user.model');
+const UserType = require('../models/user-type.model');
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [{
+        model: UserType,
+        as: 'user_type'
+      }]
+    });
 
     res.status(200).send(users);
   }
@@ -35,20 +40,21 @@ const getUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, userType } = req.body;
 
-    const existingUser = await User.findOne({
+    const existUser = await User.findOne({
       where: {
         email
       }
-    }); // Select id,email,username,password from users where email ='nuruddinkawsar1995@gmail.com'
+    });
 
-    if (existingUser) return res.status(400).send('Already registered with this email address.');
+    if (existUser) return res.status(400).send('Already registered with this email address.');
 
     const user = await User.create({
       username,
       email,
-      password
+      password,
+      user_type_id: userType
     });
 
     res.status(201).send(user);
@@ -62,13 +68,11 @@ const createUser = async (req, res) => {
 const putUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email } = req.body;
-
-    const err = await validateUserUpdate({ username, email });
-
-    if (err) return res.status(400).send(err);
+    const { firstName, lastName, username, email } = req.body;
 
     const user = await User.update({
+      first_name: firstName,
+      last_name: lastName,
       username,
       email
     }, {
@@ -90,13 +94,9 @@ const putUser = async (req, res) => {
 const patchUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, email } = req.body;
+    const { firstName, lastName, username, email } = req.body;
 
-    const err = await validateUserUpdate({ username, email });
-
-    if (err) return res.status(400).send(err);
-
-    const user = await User.update({
+    const user = await User.findOne({
       where: {
         id
       }
@@ -104,8 +104,10 @@ const patchUser = async (req, res) => {
 
     if (!user) return res.status(404).send('User not found!');
 
-    if (username) user.update({ username })
-    if (email) user.update({ email })
+    if (firstName) user.update({ first_name: firstName });
+    if (lastName) user.update({ first_name: lastName });
+    if (username) user.update({ username });
+    if (email) user.update({ email });
 
     res.status(201).send(user);
   }
@@ -119,7 +121,7 @@ const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.destroy({
+    const user = await User.findOne({
       where: {
         id
       }
@@ -135,13 +137,13 @@ const deleteUser = async (req, res) => {
     console.log(err);
     res.status(500).send('Internal server error!');
   }
-}
-module.exports = {
-  getUser,
-  getUsers,
-  createUser,
-  putUser,
-  patchUser,
-  deleteUser
+
+
 }
 
+module.exports.getUsers = getUsers;
+module.exports.getUser = getUser;
+module.exports.createUser = createUser;
+module.exports.putUser = putUser;
+module.exports.patchUser = patchUser;
+module.exports.deleteUser = deleteUser;

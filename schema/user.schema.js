@@ -38,7 +38,5 @@ const userUpdateSchema = object().shape({
       email => isEmailLengthValid(email))
 });
 
-module.exports = {
-  userRegisterSchema,
-  userUpdateSchema
-};
+module.exports.userRegisterSchema = userRegisterSchema;
+module.exports.userUpdateSchema = userUpdateSchema;

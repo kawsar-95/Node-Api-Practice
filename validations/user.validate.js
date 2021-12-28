@@ -19,7 +19,6 @@ const validateUserUpdate = async user => {
     return err.errors[0];
   }
 }
-module.exports = {
-  validateUserRegistration,
-  validateUserUpdate
-}
+
+module.exports.validateUserRegistration = validateUserRegistration;
+module.exports.validateUserUpdate = validateUserUpdate;

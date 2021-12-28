@@ -1,5 +1,5 @@
-const users = require('./routes/user.routes.js');
-const products = require('./routes/product.routes.js');
+const users = require('./routes/user.routes');
+const products = require('./routes/product.routes');
 const express = require('express');
 const app = express();
 

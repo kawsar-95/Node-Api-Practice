@@ -1,5 +1,4 @@
-const { Product } = require("../models/dbmodel");
-const { validateProductUpload, validateProductUpdate } = require("../validations/product.validate");
+const Product = require("../models/product.model");
 
 const getProducts = async (req, res) => {
   try {
@@ -32,13 +31,9 @@ const getProduct = async (req, res) => {
   }
 }
 
-const postProduct = async (req, res) => {
+const addProduct = async (req, res) => {
   try {
     const { name, price, description, category } = req.body;
-
-    const err = await validateProductUpload({ name, price, description, category });
-
-    if (err) return res.status(400).send(err);
 
     const product = await Product.create({
       name,
@@ -60,10 +55,6 @@ const putProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, price, description, category } = req.body;
-
-    const err = await validateProductUpdate({ name, price, description, category });
-
-    if (err) return res.status(400).send(err);
 
     const product = await Product.update({
       name,
@@ -91,11 +82,7 @@ const patchProduct = async (req, res) => {
     const { id } = req.params;
     const { name, price, description, category } = req.body;
 
-    const err = await validateProductUpdate({ name, price, description, category });
-
-    if (err) return res.status(400).send(err);
-
-    const product = await Product.update({
+    const product = await Product.findOne({
       where: {
         id
       }
@@ -103,10 +90,10 @@ const patchProduct = async (req, res) => {
 
     if (!product) return res.status(404).send('Product not found!');
 
-    if (name) product.update({ name })
-    if (price) product.update({ price })
-    if (description) product.update({ description })
-    if (category) product.update({ category })
+    if (name) product.update({ name });
+    if (price) product.update({ price });
+    if (description) product.update({ description });
+    if (category) product.update({ category });
 
     res.status(201).send(product);
   }
@@ -131,11 +118,10 @@ const deleteProduct = async (req, res) => {
 
   res.sendStatus(201).send(product);
 }
-module.exports = {
-  getProduct,
-  getProducts,
-  postProduct,
-  putProduct,
-  patchProduct,
-  deleteProduct
-}
+
+module.exports.getProducts = getProducts;
+module.exports.getProduct = getProduct;
+module.exports.addProduct = addProduct;
+module.exports.putProduct = putProduct;
+module.exports.patchProduct = patchProduct;
+module.exports.deleteProduct = deleteProduct;

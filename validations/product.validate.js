@@ -1,4 +1,4 @@
-const { productUploadSchema, productUpdateSchema } = require("../schema/product.schema")
+const { productUploadSchema, productUpdateSchema } = require("../schema/product.schema");
 
 const validateProductUpload = async product => {
   try {
@@ -20,7 +20,5 @@ const validateProductUpdate = async product => {
   }
 }
 
-module.exports = {
-  validateProductUpdate,
-  validateProductUpload
-}
+module.exports.validateProductUpload = validateProductUpload;
+module.exports.validateProductUpdate = validateProductUpdate;
