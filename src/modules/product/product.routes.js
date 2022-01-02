@@ -1,15 +1,16 @@
-const path = require('path')
-const express = require('express');
-const router = express.Router();
+const path = require('path');
 const controller = require('./product.controller');
 const validate = require(path.join(process.cwd(), 'src/modules/core/middlewares/validate'));
 const { productUploadSchema, productUpdateSchema } = require("./product.schema")
 
-router.get('/api/products', controller.getProducts);
-router.get('/api/products/:id', controller.getProduct);
-router.post('/api/products', validate(productUploadSchema), controller.addProduct);
-router.put('/api/products/:id', validate(productUploadSchema), controller.putProduct);
-router.patch('/api/products/:id', validate(productUpdateSchema), controller.patchProduct);
-router.delete('/api/products/:id', controller.deleteProduct);
+module.exports = app => {
+    app.route('/api/products')
+        .get(controller.getProducts)
+        .post(validate(productUploadSchema), controller.addProduct);
 
-module.exports = router;
+    app.route('/api/products/:id')
+        .get(controller.getProduct)
+        .put(validate(productUploadSchema), controller.putProduct)
+        .patch(validate(productUpdateSchema), controller.patchProduct)
+        .delete(controller.deleteProduct)
+}

@@ -1,20 +1,19 @@
-const path = require("path");
-const users = require(path.join(process.cwd(), "src/modules/user/user.routes.js"))
-
-// const users = require('../../routes/user.routes');
-// const products = require('../../routes/product.routes');
 const express = require('express');
+const path = require('path');
+const users = require(path.join(process.cwd(), 'src/modules/user/user.routes'));
+const products = require(path.join(process.cwd(), 'src/modules/product/product.routes'));
 
-module.exports = async function () {
-  const app = express();
-  app.use(express.json());
+module.exports = async () => {
+    const app = express();
 
-  app.use(users);
-  // app.use(products);
+    app.use(express.json());
 
-  app.get('/', (req, res) => {
-    res.send('The server is running...');
-  });
+    users(app);
+    products(app);
 
-  return app;
+    app.get('/', (req, res) => {
+        res.send('The server is running...');
+    });
+
+    return app;
 }
