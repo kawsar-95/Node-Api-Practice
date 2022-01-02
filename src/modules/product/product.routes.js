@@ -1,8 +1,9 @@
+const path = require('path')
 const express = require('express');
 const router = express.Router();
-const controller = require('../controller/product.controller');
-const validate = require('../middleware/validate');
-const { productUploadSchema, productUpdateSchema } = require("../schema/product.schema")
+const controller = require('./product.controller');
+const validate = require(path.join(process.cwd(), 'src/modules/core/middlewares/validate'));
+const { productUploadSchema, productUpdateSchema } = require("./product.schema")
 
 router.get('/api/products', controller.getProducts);
 router.get('/api/products/:id', controller.getProduct);

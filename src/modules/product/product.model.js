@@ -1,5 +1,8 @@
+const path = require("path")
+const sequelize = require(path.join(process.cwd(), 'src/config/lib/sequelize'));
+
 const { DataTypes } = require('sequelize');
-const sequelize = require('./dbmodel');
+
 
 const Product = sequelize.define('products', {
   name: {

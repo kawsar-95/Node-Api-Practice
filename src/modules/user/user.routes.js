@@ -1,8 +1,12 @@
+const path = require("path");
+const validate = require(path.join(process.cwd(), 'src/modules/core/middlewares/validate'));
+
+
 const express = require('express');
 const router = express.Router();
-const controller = require('../controller/user.controller');
-const validate = require('../middleware/validate');
-const { userRegisterSchema, userUpdateSchema } = require('../schema/user.schema');
+const controller = require('./user.controller');
+
+const { userRegisterSchema, userUpdateSchema } = require('./user.schema');
 
 router.get('/api/users', controller.getUsers)
 router.get('/api/users/:id', controller.getUser);
