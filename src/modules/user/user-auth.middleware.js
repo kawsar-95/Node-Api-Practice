@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const verifyToken = (req, res, next) => {
   const token = req.headers['access-token'];
 
@@ -13,4 +15,4 @@ const verifyToken = (req, res, next) => {
     return res.status(401).send('Invalid token');
   }
 };
-module.exports.verifyToken = verifyToken;
+module.exports = verifyToken;

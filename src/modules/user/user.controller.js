@@ -175,10 +175,8 @@ async function deleteUser(req, res) {
     console.log(err);
     res.status(500).send('Internal server error!');
   }
-
-
 }
-
+module.exports.login = login;
 module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
 module.exports.createUser = createUser;
