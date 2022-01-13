@@ -3,7 +3,7 @@ const UserType = require('./user-type.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-async function login(res, req) {
+async function login(req, res) {
   try {
     const { email, password } = req.body;
 
@@ -12,16 +12,20 @@ async function login(res, req) {
         email
       }
     });
-
+    console.log(user);
+    console.log(user.email);
+    console.log(user.password);
+    console.log(user.validPassword(password));
     if (!user || !user.password || !user.validPassword(password)) return res.status(404).send("Invalid Email Or Password");
 
     //Make a Token And Return It
     const payload = { user_id: user.id, email: user.email };
 
-    const token = jwt.sign(payload, 'iamkawsar', { expiresIn: '1h' });
+    const token = jwt.sign(payload, 'token_secret', { expiresIn: '1h' });
 
     // user.token = token;
-    user.dataValues.token = token;
+    // user.dataValues.token = token;
+    res.cookie("access_token", token);
 
     return res.status(200).send(user);
   }
