@@ -1,15 +1,16 @@
 const express = require('express');
+const cookieParser = require("cookie-parser")
 const path = require('path');
-const users = require(path.join(process.cwd(), 'src/modules/user/user.routes'));
+const userRouter = require(path.join(process.cwd(), 'src/modules/user/user.routes'));
 const userStrategy = require(path.join(process.cwd(), 'src/modules/user/user.strategy'));
 const products = require(path.join(process.cwd(), 'src/modules/product/product.routes'));
 
 module.exports = async () => {
   const app = express();
-
+  app.use(cookieParser("cookie_secret"))
   app.use(express.json());
   // app.use(express.urlencoded({ extended: true }));
-  users(app);
+  userRouter(app);
   products(app);
   userStrategy();
 
