@@ -1,7 +1,7 @@
 const User = require('./user.model');
 const UserType = require('./user-type.model');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+
 
 async function login(req, res) {
   try {
@@ -17,7 +17,11 @@ async function login(req, res) {
 
     const token = jwt.sign({ id: user.id }, 'token_secret', { expiresIn: '1h' });
 
-    res.cookie("access_token", token, { httpOnly: true, sameSite: true, signed: true });
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      sameSite: true,
+      signed: true
+    });
 
     return res.status(200).send(user);
   }
@@ -71,7 +75,7 @@ async function getUser(req, res) {
 
 async function createUser(req, res) {
   try {
-    const { username, email, password, userType } = req.body;
+    const { username, email, password, user_type_id } = req.body;
 
     const existUser = await User.findOne({
       where: {
@@ -81,14 +85,12 @@ async function createUser(req, res) {
 
     if (existUser) return res.status(400).send('Already registered with this email address.');
 
-    // const salt = bcrypt.genSaltSync(10);
-    // const hashed = bcrypt.hashSync(password, salt);
 
     const user = await User.create({
       username,
       email,
-      password: hashed,
-      user_type_id: userType
+      password,
+      user_type_id: user_type_id
     });
 
     res.status(201).send(user);

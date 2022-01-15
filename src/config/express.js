@@ -9,7 +9,7 @@ module.exports = async () => {
   const app = express();
   app.use(cookieParser("cookie_secret"))
   app.use(express.json());
-  // app.use(express.urlencoded({ extended: true }));
+
   userRouter(app);
   products(app);
   userStrategy();
