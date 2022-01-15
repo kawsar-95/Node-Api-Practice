@@ -7,7 +7,7 @@ const AuthStrategy = (req, res, next) => {
       console.log(err);
       return res.status(500).send("Internal Server Error");
     }
-    if (!user) return;
+    if (!user) return res.status(401).send("Unauthenticated User");
 
     req.login(user, { session: false }, function (error) {
       if (error) return next(error);
@@ -16,7 +16,19 @@ const AuthStrategy = (req, res, next) => {
   });
   auth(req, res, next);
 };
+/*
+1.Name Of the Strategy
+2.Strategy Object 
+  a.secret
+  b.cookiue Extractor
+  c.Callback Function => Either Pass the user.
+                          Or Pass Flase
 
+1.Name Of the Strategy
+2.Callback Function => Process the Request
+3.
+
+*/
 
 module.exports.AuthStrategy = AuthStrategy;
 
@@ -26,7 +38,7 @@ const verifyToken = async (req, res, next) => {
   if (!token) return res.status(403).send('Authentication Failed');
 
   try {
-    const decoded = jwt.verify(token, "token_secret");
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = decoded;
     next();
   }
@@ -36,3 +48,4 @@ const verifyToken = async (req, res, next) => {
   }
 };
 module.exports.verifyToken = verifyToken;
+

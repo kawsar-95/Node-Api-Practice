@@ -15,7 +15,7 @@ async function login(req, res) {
 
     if (!user || !user.password || !user.validPassword(password)) return res.status(404).send("Invalid Email Or Password");
 
-    const token = jwt.sign({ id: user.id }, 'token_secret', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET, { expiresIn: '1h' });
 
     res.cookie("access_token", token, {
       httpOnly: true,

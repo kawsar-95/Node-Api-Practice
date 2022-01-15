@@ -12,6 +12,8 @@ const UserType = sequelize.define('user_types', {
     values: [0, 1]
   },
 },
+  //For Some Error in the database
+  // original: Error: Table 'initial_test_db.user_types' doesn't exist It's Solution
   {
     tableName: "user_type",
   }

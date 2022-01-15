@@ -10,7 +10,7 @@ module.exports = function () {
     return token;
   }
 
-  passport.use("user-jwt", new Strategy({ secretOrKey: "token_secret", jwtFromRequest: cookieExtractor }, function (payload, done) {
+  passport.use("user-jwt", new Strategy({ secretOrKey: process.env.TOKEN_SECRET, jwtFromRequest: cookieExtractor }, function (payload, done) {
     User.findOne({
       where: {
         id: payload.id
